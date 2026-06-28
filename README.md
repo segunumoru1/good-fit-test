@@ -29,8 +29,10 @@ all distances via haversine from provided latitude/longitude.
 
 ## Incomplete rows
 
-- **L06** (missing price): skipped - cannot compute any rate without a price.
-- **L07** (missing destination): skipped - deadhead-home leg is undefined without coordinates.
+- **L06** has no price listed. Without a price, there is no way to compute a rate per mile — the core metric the entire ranking depends on. Assigning a placeholder (like $0 or an average) would produce a meaningless or misleading rank, so L06 is excluded and logged.
+- **L07**  has no destination. Without a destination, the loaded miles and the deadhead-home leg are both undefined. Two of the three distance components are missing, making any rate calculation impossible. L07 is excluded and logged. 
+
+`Both are flagged in the output with an explicit reason so a human dispatcher can follow up — they are not silently dropped.`
 
 ## One rejected high-payer
 
